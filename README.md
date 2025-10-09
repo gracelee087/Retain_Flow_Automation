@@ -10,6 +10,25 @@ This project is a system that automates customer retention strategies through cu
 - **Supabase Integration**: Real-time data storage and management
 - **Streamlit Cloud Deployment**: Web-based interface provision
 
+## Models Used
+
+### 1. Customer Churn Prediction Model
+- **Problem Type**: Classification
+- **Model**: RandomForestClassifier + CalibratedClassifierCV
+- **Purpose**: Predict customer churn probability (0-1)
+- **Features**: Customer tenure, contract type, payment method, service usage, billing data
+- **Preprocessing**: SMOTE oversampling for class imbalance, one-hot encoding
+- **Segmentation**: KMeans clustering (4 groups based on churn probability and monthly charges)
+
+### 2. Revenue Prediction Model
+- **Problem Type**: Regression
+- **Model**: Baseline Linear Regression + RandomForestRegressor (Residual Learning)
+- **Purpose**: Predict customer total charges/revenue
+- **Features**: 
+  - Baseline: tenure, monthly charges
+  - Residual: payment method, service features, demographics
+- **Methodology**: Residual learning to correct baseline prediction errors
+
 ## Technology Stack
 - **Frontend**: Streamlit
 - **Backend**: Python, SQLAlchemy
