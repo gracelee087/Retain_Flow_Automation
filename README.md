@@ -1,43 +1,43 @@
 # RetainFlow Automation: Customer Churn Prediction
 
-## 프로젝트 개요
-이 프로젝트는 고객 이탈 예측과 매출 예측을 통해 고객 유지 전략을 자동화하는 시스템입니다. Streamlit을 사용한 웹 애플리케이션과 Supabase 데이터베이스 연동을 통해 실시간 예측 및 데이터 저장이 가능합니다.
+## Project Overview
+This project is a system that automates customer retention strategies through customer churn prediction and revenue prediction. Real-time prediction and data storage are possible through a web application using Streamlit and Supabase database integration.
 
-## 주요 기능
-- **고객 이탈 예측**: 머신러닝 모델을 통한 고객 이탈 확률 예측
-- **매출 예측**: 고객의 예상 수익 예측
-- **고객 세그먼테이션**: 위험도와 가치에 따른 고객 분류
-- **Supabase 연동**: 실시간 데이터 저장 및 관리
-- **Streamlit Cloud 배포**: 웹 기반 인터페이스 제공
+## Key Features
+- **Customer Churn Prediction**: Customer churn probability prediction through machine learning models
+- **Revenue Prediction**: Customer expected revenue prediction
+- **Customer Segmentation**: Customer classification by risk and value
+- **Supabase Integration**: Real-time data storage and management
+- **Streamlit Cloud Deployment**: Web-based interface provision
 
-## 기술 스택
+## Technology Stack
 - **Frontend**: Streamlit
 - **Backend**: Python, SQLAlchemy
 - **Database**: Supabase (PostgreSQL)
 - **ML**: scikit-learn, imbalanced-learn
 - **Visualization**: matplotlib, seaborn
 
-## Streamlit Cloud 배포 가이드
+## Streamlit Cloud Deployment Guide
 
-### 1. GitHub 저장소 준비
-1. 이 프로젝트를 GitHub 저장소에 업로드
-2. 모든 파일이 올바른 위치에 있는지 확인
+### 1. Prepare GitHub Repository
+1. Upload this project to a GitHub repository
+2. Verify all files are in the correct location
 
-### 2. Streamlit Cloud 설정
-1. [Streamlit Cloud](https://share.streamlit.io/)에 접속
-2. "New app" 클릭
-3. GitHub 저장소 연결
-4. 메인 파일 경로: `Streamlit_app.py`
+### 2. Streamlit Cloud Setup
+1. Access [Streamlit Cloud](https://share.streamlit.io/)
+2. Click "New app"
+3. Connect GitHub repository
+4. Main file path: `Streamlit_app.py`
 
-### 3. 환경변수 설정
-Streamlit Cloud의 Secrets Management에서 다음 환경변수를 설정:
+### 3. Environment Variables Setup
+Set the following environment variables in Streamlit Cloud's Secrets Management:
 
 ```toml
 [DATABASE_URL]
 DATABASE_URL = "postgresql+psycopg2://postgres:YOUR_PASSWORD@db.fjaxvaegmtbsyogavuzy.supabase.co:5432/postgres?sslmode=require"
 ```
 
-### 4. 필요한 파일 구조
+### 4. Required File Structure
 ```
 ├── Streamlit_app.py
 ├── requirements.txt
@@ -54,29 +54,29 @@ DATABASE_URL = "postgresql+psycopg2://postgres:YOUR_PASSWORD@db.fjaxvaegmtbsyoga
 └── pic.png
 ```
 
-## 로컬 실행
+## Local Execution
 ```bash
 pip install -r requirements.txt
 streamlit run Streamlit_app.py
 ```
 
-## 문제 해결
+## Troubleshooting
 
-### 1. 모델 파일이 없다는 오류
-- 모델 파일(`pipeline_customer_churn_model.pkl`, `pipeline_customer_revenue_model.pkl`)이 `notebook/` 디렉토리에 있는지 확인
-- GitHub에 모든 파일이 업로드되었는지 확인
+### 1. Model File Not Found Error
+- Check if model files (`pipeline_customer_churn_model.pkl`, `pipeline_customer_revenue_model.pkl`) are in the `notebook/` directory
+- Verify all files are uploaded to GitHub
 
-### 2. Supabase 연결 실패
-- Streamlit Cloud의 Secrets Management에서 올바른 DATABASE_URL 설정
-- Supabase 프로젝트가 활성화되어 있는지 확인
-- 방화벽 설정 확인
+### 2. Supabase Connection Failure
+- Set correct DATABASE_URL in Streamlit Cloud's Secrets Management
+- Verify Supabase project is active
+- Check firewall settings
 
-### 3. psycopg2-binary 설치 실패
-- requirements.txt에서 psycopg2-binary 버전을 2.9.10 이상으로 설정
-- Streamlit Cloud가 자동으로 호환되는 버전을 설치
+### 3. psycopg2-binary Installation Failure
+- Set psycopg2-binary version to 2.9.10 or higher in requirements.txt
+- Streamlit Cloud automatically installs compatible versions
 
-## 주의사항
-- Supabase 데이터베이스 연결 정보는 환경변수로 관리
-- 모델 파일과 이미지 파일은 상대 경로로 참조
-- Streamlit Cloud에서는 절대 경로 사용 불가
-- DB 연결이 실패해도 예측 기능은 정상 작동
+## Notes
+- Supabase database connection information is managed through environment variables
+- Model files and image files are referenced with relative paths
+- Absolute paths cannot be used in Streamlit Cloud
+- Prediction functionality works normally even if DB connection fails

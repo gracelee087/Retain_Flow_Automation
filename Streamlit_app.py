@@ -6,15 +6,15 @@ from sqlalchemy.dialects.postgresql import insert
 import numpy as np
 import os
 
-# Supabase DB 접속 문자열 - 환경변수 사용
-# 앱 시작 시에는 DB 연결을 테스트하지 않음 (Application 탭에서만 연결)
+# Supabase DB connection string - using environment variables
+# DB connection is not tested at app startup (only connected in Application tab)
 
 
     
 st.title("RetainFlow Automation: Customer Churn Prediction")
 
 
-# 탭 생성
+# Create tabs
 tab1, tab2, tab3, tab4, tab5= st.tabs(["Problem", "EDA", "Modeling/Evaluation", "Application", "Outcome"])
 
 
@@ -137,7 +137,7 @@ with tab2:
     **Billing Metrics**  
     - Higher MonthlyCharges are associated with higher churn  
     - In contrast, TotalCharges show a negative correlation with churn, reflecting stronger customer loyalty 
-      (총 요금(누적 지출액)이 높을수록 이탈 확률은 줄어든다는 뜻) 
+      (Higher total charges (cumulative spending) indicate lower churn probability) 
 
     **Contract & Service Features**  
     - Month-to-month contracts have the highest churn rate  
@@ -168,9 +168,9 @@ with tab2:
                     caption=img
                 )
         else:
-            st.warning("⚠️ EDA 이미지 파일이 없습니다.")
+            st.warning("⚠️ EDA image files not found.")
     else:
-        st.error("❌ EDA 경로를 찾을 수 없습니다. 경로를 다시 확인해주세요.")
+        st.error("❌ EDA path not found. Please check the path again.")
 
 
 
@@ -180,7 +180,7 @@ with tab3:
     # ---------------------------
     # Methodology & Technology Stack
     # ---------------------------
-    st.header("-Methodology and Technology Stack Used")
+    st.header("Methodology and Technology Stack Used")
 
     st.subheader("1. Methodology")
     st.markdown("""
@@ -209,7 +209,7 @@ with tab3:
     # ---------------------------
     # Modelling
     # ---------------------------
-    st.header("2.Modelling")
+    st.header("2. Modeling")
 
     st.markdown("""
     **1) Customer Churn Prediction Model** 
@@ -243,7 +243,7 @@ with tab3:
 
 
 
-    st.header("-Churn Prediction Model Performance Evaluation")
+    st.header("Churn Prediction Model Performance Evaluation")
 
     modeling_path = "notebook/notebook/modeling_insight"
 
@@ -257,16 +257,16 @@ with tab3:
         img_files = [f for f in os.listdir(modeling_path) if f.endswith((".png", ".jpg", ".jpeg"))]
 
         if img_files:
-            for img in sorted(img_files):  # 정렬해서 순서대로 보여주기
+            for img in sorted(img_files):  # Sort to display in order
                 st.image(
                     os.path.join(modeling_path, img),
                     caption=img,
-                    width=800 # ✅ 원하는 크기 (px 단위)
+                    width=800 # ✅ Desired size (px unit)
                 )
         else:
-            st.warning("⚠️ 모델 성능 이미지 파일이 없습니다.")
+            st.warning("⚠️ Model performance image files not found.")
     else:
-        st.error("❌ 모델링 결과 경로를 찾을 수 없습니다. 경로를 다시 확인해주세요.")
+        st.error("❌ Modeling results path not found. Please check the path again.")
 
 
 
@@ -280,14 +280,14 @@ with tab3:
 
 
     # ---------------------------
-    # Churn 모델과 Revenue 모델 구분선
+    # Separator between Churn model and Revenue model
     # ---------------------------
     
 
-    st.divider()  # 최신 Streamlit
-    # st.markdown("---")  # 혹은 이 방식도 가능
+    st.divider()  # Latest Streamlit
+    # st.markdown("---")  # Or this method is also possible
 
-    st.header("-Revenue Prediction Model Performance Evaluation")
+    st.header("Revenue Prediction Model Performance Evaluation")
 
     revenue_path = "notebook/revenue_insight"
 
@@ -312,9 +312,9 @@ with tab3:
                     width=800
                 )
         else:
-            st.warning("⚠️ Revenue 모델 시각화 이미지가 없습니다.")
+            st.warning("⚠️ Revenue model visualization images not found.")
     else:
-        st.error("❌ Revenue 결과 경로를 찾을 수 없습니다. 경로를 다시 확인해주세요.")
+        st.error("❌ Revenue results path not found. Please check the path again.")
 
 
 
@@ -326,7 +326,7 @@ with tab4:
     st.header("Customer Churn + Revenue Forecasting (Supabase Integration)")
 
     # ---------------------------
-    # 1. 모델 로드 (사용자가 탭을 클릭했을 때만)
+    # 1. Load models (only when user clicks the tab)
     # ---------------------------
     @st.cache_resource
     def load_models():
@@ -335,11 +335,11 @@ with tab4:
             import sys
             warnings.filterwarnings("ignore")
             
-            # scikit-learn 호환성 문제를 우회하기 위한 패치
+            # Patch to bypass scikit-learn compatibility issues
             try:
                 from sklearn.utils._tags import _safe_tags
             except ImportError:
-                # _safe_tags가 없는 경우 더미 함수 생성
+                # Create dummy function if _safe_tags is not available
                 def _safe_tags(estimator, key, tag_val=None):
                     return getattr(estimator, '_more_tags', lambda: {}).get(key, tag_val)
                 
@@ -362,40 +362,40 @@ with tab4:
             return model, scaler, kmeans, base_model, residual_model, None
             
         except FileNotFoundError as e:
-            return None, None, None, None, None, f"❌ 모델 파일을 찾을 수 없습니다: {e}"
+            return None, None, None, None, None, f"❌ Model file not found: {e}"
         except Exception as e:
-            return None, None, None, None, None, f"❌ 모델 로드 실패: {e}"
+            return None, None, None, None, None, f"❌ Model loading failed: {e}"
 
     # 모델 로드 시도
     model, scaler, kmeans, base_model, residual_model, error = load_models()
     
     if error:
         st.error(error)
-        st.info("💡 모델 파일이 올바른 위치에 있는지 확인해주세요.")
+        st.info("💡 Please check if the model files are in the correct location.")
         st.stop()
     else:
         st.success("✅ Model loaded successfully")
 
     # ---------------------------
-    # 2. Postgres DB 연결
+    # 2. Postgres DB connection
     # ---------------------------
     try:
-        # DATABASE_URL을 올바르게 가져오기
+        # Get DATABASE_URL correctly
         if isinstance(st.secrets["DATABASE_URL"], dict):
             database_url = st.secrets["DATABASE_URL"]["DATABASE_URL"]
         else:
             database_url = st.secrets["DATABASE_URL"]
             
         engine = create_engine(database_url)
-        # 연결 테스트
+        # Connection test
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
         st.success("✅ Supabase DB connected successfully")
         db_connected = True
     except Exception as e:
-        st.warning(f"⚠️ Supabase DB 연결 실패: {e}")
-        st.info("💡 DB 연결 없이도 예측 기능을 사용할 수 있습니다.")
-        st.info("💡 Streamlit Cloud의 Secrets Management에서 DATABASE_URL을 설정하세요.")
+        st.warning(f"⚠️ Supabase DB connection failed: {e}")
+        st.info("💡 Prediction functionality can be used without DB connection.")
+        st.info("💡 Set DATABASE_URL in Streamlit Cloud's Secrets Management.")
         db_connected = False
 
     # ---------------------------
@@ -406,10 +406,10 @@ with tab4:
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
 
-        # (1) 고객 이탈 확률 예측
+        # (1) Customer churn probability prediction
         df["churn_prob"] = model.predict_proba(df)[:, 1]
 
-        # (2) 매출 예측 (Baseline + Residual)
+        # (2) Revenue prediction (Baseline + Residual)
         X_base = df[["tenure", "MonthlyCharges"]]
         X_res = df[["PaymentMethod", "PaperlessBilling", "Dependents",
                     "OnlineBackup", "InternetService", "StreamingTV", "OnlineSecurity"]]
@@ -418,18 +418,18 @@ with tab4:
         residual_pred = residual_model.predict(X_res)
         df["predicted_revenue"] = np.clip(baseline_pred + residual_pred, a_min=0, a_max=None)
 
-        # (3) 📌 12개월 기준 지표
+        # (3) 📌 12-month based metrics
         df["revenue_12m"] = df["MonthlyCharges"] * 12
         df["expected_loss_12m"] = df["revenue_12m"] * df["churn_prob"]
 
-        # (4) 클러스터링
+        # (4) Clustering
         cluster_input = pd.DataFrame({
             "ChurnProbability": df["churn_prob"],
             "MonthlyCharges": df["MonthlyCharges"]
         })
         df["Cluster"] = kmeans.predict(scaler.transform(cluster_input))
 
-        # 📊 클러스터별 평균으로 Risk/Value 자동 라벨링
+        # 📊 Automatic Risk/Value labeling based on cluster averages
         cluster_summary = df.groupby("Cluster")[["churn_prob", "MonthlyCharges"]].mean()
         risk_threshold = df["churn_prob"].mean()
         value_threshold = df["MonthlyCharges"].mean()
@@ -442,7 +442,7 @@ with tab4:
 
         df["cluster_label"] = df["Cluster"].apply(auto_label)
 
-        # (5) base_message 생성
+        # (5) Generate base_message
         base_messages = {
             "High Risk & High Value": "Exclusive premium offers to retain our top customers",
             "High Risk & Low Value": "Special discount to prevent churn at minimal cost",
@@ -452,7 +452,7 @@ with tab4:
         df["base_message"] = df["cluster_label"].map(base_messages)
 
 
-        # (6) 컬럼명 DB 테이블과 맞추기
+        # (6) Match column names with DB table
         df = df.rename(columns={
             "customerID": "customer_id",
             "Email": "email"
@@ -460,7 +460,7 @@ with tab4:
 
 
         # ---------------------------
-        # 7. Supabase DB 저장 (DB 연결된 경우에만)
+        # 7. Supabase DB save (only when DB is connected)
         # ---------------------------
         if db_connected:
             try:
@@ -495,14 +495,14 @@ with tab4:
                         conn.execute(stmt)
 
                 # ---------------------------
-                # 8. Top 10 고객 저장 (→ top_risk_customers 테이블)
+                # 8. Save Top 10 customers (→ top_risk_customers table)
                 # ---------------------------
                 top10 = df.sort_values("expected_loss_12m", ascending=False).head(10)
 
                 top_table = metadata.tables["top_risk_customers"]
 
                 with engine.begin() as conn:
-                    # 기존 데이터 지우고 새로 저장 (덮어쓰기 방식)
+                    # Clear existing data and save new data (overwrite method)
                     conn.execute(text("TRUNCATE TABLE top_risk_customers;"))
 
                     for _, row in top10.iterrows():
@@ -518,16 +518,16 @@ with tab4:
                         )
                         conn.execute(stmt)
                         
-                st.success("✅ Supabase DB 업데이트 완료! (전체 predictions + Top 10 저장)")
+                st.success("✅ Supabase DB update completed! (All predictions + Top 10 saved)")
                 
             except Exception as e:
-                st.error(f"❌ DB 저장 실패: {e}")
-                st.info("💡 예측 결과는 표시되지만 DB에 저장되지 않았습니다.")
+                st.error(f"❌ DB save failed: {e}")
+                st.info("💡 Prediction results are displayed but not saved to DB.")
         else:
-            st.info("ℹ️ DB 연결이 없어 데이터가 저장되지 않았습니다.")
+            st.info("ℹ️ Data not saved due to no DB connection.")
 
         # ---------------------------
-        # 9. Streamlit 출력
+        # 9. Streamlit output
         # ---------------------------
         st.subheader("Prediction and segmentation results")
         st.dataframe(df[["customer_id", "email", "churn_prob",

@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\honor\spicedAcademy\Capstone_Final_Project\Retain_Flow_Automation-\.venv"
+VIRTUAL_ENV="C:\Users\honor\final\Retain_Flow_Automation-\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
