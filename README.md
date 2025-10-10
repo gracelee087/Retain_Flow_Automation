@@ -38,7 +38,7 @@ This project is a system that automates customer retention strategies through cu
 - **Visualization**: matplotlib, seaborn
 - **Automation Tool**: n8n & Make
 
-### Workflow Details
+### 3. Workflow Details
 
 #### Trigger
 - When new prediction data (e.g., **churn probability > threshold**) is inserted into **Supabase**.
