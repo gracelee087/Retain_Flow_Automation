@@ -47,12 +47,8 @@ This project is a system that automates customer retention strategies through cu
 - Monitors **Supabase** via Webhook or Supabase node  
 - Filters customers by **churn probability** or **revenue tier**  
 - Sends structured **JSON payload** to **n8n** or other external APIs
-
-#### Make Role
-- Executes automated actions such as:
-  - Sending notifications (e.g., Slack, Gmail)
-  - Updating CRM tools (**HubSpot**, **Notion**, etc.)
-  - Creating follow-up tasks for the retention team
+- Sending notifications (e.g., Slack, Gmail)
+- Creating follow-up tasks for the retention team
     
 ---
 
