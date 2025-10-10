@@ -9,7 +9,7 @@ This project is a system that automates customer retention strategies through cu
 - **Customer Segmentation**: Customer classification by risk and value
 - **Supabase Integration**: Real-time data storage and management
 - **Streamlit Cloud Deployment**: Web-based interface provision
-- **Automation Tool**: n8n & Make
+- **Automation Workflow**: Task and data pipeline automation powered by n8n & Make 
 
 ## Models Used
 
@@ -36,6 +36,36 @@ This project is a system that automates customer retention strategies through cu
 - **Database**: Supabase (PostgreSQL)
 - **ML**: scikit-learn, imbalanced-learn
 - **Visualization**: matplotlib, seaborn
+- **Automation Tool**: n8n & Make
+
+### Workflow Details
+
+#### Trigger
+- When new prediction data (e.g., **churn probability > threshold**) is inserted into **Supabase**.
+
+#### n8n Role
+- Monitors **Supabase** via Webhook or Supabase node  
+- Filters customers by **churn probability** or **revenue tier**  
+- Sends structured **JSON payload** to **Make** or other external APIs
+
+#### Make Role
+- Executes automated actions such as:
+  - Sending notifications (e.g., Slack, Gmail)
+  - Updating CRM tools (**HubSpot**, **Notion**, etc.)
+  - Creating follow-up tasks for the retention team
+
+#### Example Use Case
+> A customer with **churn probability > 0.8** is detected →  
+> **n8n** triggers a webhook →  
+> **Make** sends a **Slack alert** to the retention team and creates a **follow-up task** in Notion.
+
+---
+
+### 🧩 Benefits
+- **Fully automated** data-driven retention workflow  
+- **No manual** data checking or script execution required  
+- **Scalable integration** with 3rd-party tools (Slack, Gmail, Notion, HubSpot, etc.)
+
 
 ## Streamlit Cloud Deployment Guide
 
