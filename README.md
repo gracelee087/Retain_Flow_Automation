@@ -9,6 +9,7 @@ This project is a system that automates customer retention strategies through cu
 - **Customer Segmentation**: Customer classification by risk and value
 - **Supabase Integration**: Real-time data storage and management
 - **Streamlit Cloud Deployment**: Web-based interface provision
+- **Automation Tool**: n8n & Make
 
 ## Models Used
 
