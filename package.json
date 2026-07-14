@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "n8n-nodes-sqlite": "^0.1.14"
-  }
-}

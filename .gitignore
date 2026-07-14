@@ -1,1 +1,13 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Env & secrets
+.env
+
 # *.pkl  # Model files need to be uploaded to GitHub
